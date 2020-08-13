@@ -8,7 +8,7 @@ import numpy as np
      并通过滑块调节HSV阈值，实时显示
 """
 
-image = cv2.imread('114.jpg') # 根据路径读取一张图片
+image = cv2.imread('881.jpg') # 根据路径读取一张图片
 cv2.imshow("BGR", image) # 显示图片
 
 hsv_low = np.array([0, 0, 0])
@@ -51,7 +51,7 @@ cv2.createTrackbar('V high', 'image', 0, 255, v_high)
 while True:
     dst = cv2.cvtColor(image, cv2.COLOR_BGR2HSV) # BGR转HSV
     dst = cv2.inRange(dst, hsv_low, hsv_high) # 通过HSV的高低阈值，提取图像部分区域
-    cv2.imshow('image', dst)
+    cv2.imshow('output', dst)
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 cv2.destroyAllWindows()

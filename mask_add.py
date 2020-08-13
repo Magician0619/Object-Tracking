@@ -49,12 +49,33 @@ def mask_add(frame):
     '''
     return res
 
+def mask_revise(frame):
+    hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+       
+    # Threshold of yellow lane
+    lower_race = np.array([25, 75, 165])
+    upper_race = np.array([40, 255, 255])
+    # Threshold of red cone
+    lower_red = np.array([0, 100, 100])
+    upper_red = np.array([20, 255, 255])
+
+    race_mask = cv2.inRange(hsv, lower_race, upper_race)
+    red_mask = cv2.inRange(hsv, lower_red, upper_red)
+    res_all = race_mask + red_mask
+    cv2.imshow("all_add",res_all)
+
+
+    race_res = cv2.bitwise_and(frame, frame, mask = race_mask)
+    red_res = cv2.bitwise_and(frame, frame, mask = red_mask)
+    res = race_res + red_res
+
+    return res
 
 if __name__ == '__main__':
 
-    img = cv2.imread('114.jpg')
-    res = mask_add(img)
-    
+    img = cv2.imread('886.jpg')
+    res = mask_revise(img)
+    cv2.imwrite("maskadd1.jpg",res)
     # plt.figure(figsize=(14,12))
     cv2.imshow("dst",res)
     cv2.waitKey(0)
