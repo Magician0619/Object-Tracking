@@ -44,43 +44,58 @@ def cross_point(line1, line2):  # 计算交点函数
         point_is_exist=True
     return point_is_exist,[x, y]
 
-def hsv(img):
+def denoising(img):
+    '''
+    Only reserve yellow car lines to caculate the cross points
+    '''
+
     lower_hsv = np.array([25, 75, 165])
     upper_hsv = np.array([40, 255, 255])
 
     hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
     mask = cv2.inRange(hsv, lowerb=lower_hsv, upperb=upper_hsv)
-    # cv2.imshow("HSV",mask)
+    
+    race_res = cv2.bitwise_and(img, img, mask = mask)
+    race_res = race_res[:,:,::-1]
+    # cv2.imshow("HSV",race_res)
+    # cv2.imwrite("debug.jpg",race_res)
+    return race_res
 
-    return mask
 
-imgPath="line.jpg"
-img=cv2.imread(imgPath)
-img = hsv(img)
-# gray=cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
-gray = img
+img = cv2.imread("line.jpg")
 
-# Gaussian Blur
-gray=cv2.GaussianBlur(gray,(1,1),0)
-# Canny 
+hsv = denoising(img)
+
+gray = cv2.cvtColor(hsv,cv2.COLOR_BGR2GRAY)
+
+gray = cv2.GaussianBlur(gray,(3,3),0)
+
 edges = cv2.Canny(gray, 50, 200)
-# Hough detect
-lines = cv2.HoughLinesP(edges, 1, np.pi / 180, 25, minLineLength=250, maxLineGap=400)
+# edges = gray
+
+lines = cv2.HoughLinesP(edges, 10, 5*np.pi / 180, 50, minLineLength=250, maxLineGap=400)
 # lines = cv2.HoughLines(edges, 1, np.pi / 180, 25,20)
 
 cv2.imshow("debug",edges)
 
 
-lines1 =lines[:, 0, :]# 提取为二维
-print("lines",lines)
-print("lines1",lines1)
-for x1, y1, x2, y2 in lines1[:]:
-    cv2.line(img, (x1, y1), (x2, y2), (0, 0, 255), 2)
+lines_hough =lines[:, 0, :]# 提取为二维
 
-for x1, y1, x2, y2 in lines1[:]:
-    for x3,y3,x4,y4 in lines1[:]:
+# print("lines1",lines_hough)
+for x1, y1, x2, y2 in lines_hough[:]:
+    cv2.line(img, (x1, y1), (x2, y2), (0, 0, 255), 2)
+    cv2.imshow('Result', img)
+
+for x1, y1, x2, y2 in lines_hough[:]:
+    for x3,y3,x4,y4 in lines_hough[:]:
         point_is_exist, [x, y]=cross_point([x1, y1, x2, y2],[x3,y3,x4,y4])
         if point_is_exist:
             cv2.circle(img,(int(x),int(y)),5,(0,0,255),1)
+            print("detect points:%d,%d"%(x,y))
+
+            # cv2.putText(img, text = str(x)+','+str(y), org = (int(x),int(y)+50), 
+                        # fontFace=cv2.FONT_HERSHEY_TRIPLEX, fontScale = 1, color = (255,0,0))
 cv2.imshow('Result', img)
+cv2.imwrite("result.jpg",img)
+
 cv2.waitKey (0)
