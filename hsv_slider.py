@@ -8,7 +8,7 @@ import numpy as np
      并通过滑块调节HSV阈值，实时显示
 """
 
-image = cv2.imread('50.jpg') # 根据路径读取一张图片
+image = cv2.imread('13.jpg') # 根据路径读取一张图片
 cv2.imshow("BGR", image) # 显示图片
 
 hsv_low = np.array([0, 0, 0])

@@ -11,3 +11,4 @@ race_mask = cv2.inRange(img, lower_race, upper_race)
 
 cv2.imshow("debug",race_mask)
 cv2.waitKey(0)
+cv2.VideoWriter_fourcc()
