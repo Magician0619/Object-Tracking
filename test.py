@@ -1,19 +1,30 @@
-import cv2 as cv
+import cv2
+import numpy as np
+# np.squeeze
+resize_size = 128
 
-def threshold_funtion(image):
-    '''
-        全局阈值    
-    '''
-    gray = cv.cvtColor(image, cv.COLOR_BGR2GRAY)
-    cv.imshow("gray",gray)
-    # ret, binary = cv.threshold(gray, 0, 255, cv.THRESH_BINARY | cv.THRESH_OTSU)
-    ret1, binary1 = cv.threshold(gray, 0, 255, cv.THRESH_BINARY)
-    # print("阈值：%s"%ret)
-    print("阈值：%s"%ret1)
-    # cv.imshow("OTSU",binary)
-    cv.imshow("OSTU1",binary1)
-    cv.waitKey(0)
+img = cv2.imread("00.jpg")
+img = cv2.resize(img,(resize_size, resize_size))
+img = np.transpose(img,[2,0,1])
+img = img[np.newaxis, :]
 
+# img6 = img1[np.newaxis, :]
 
-img = cv.imread("3line.jpg")
-threshold_funtion(img)
+# img2 = np.expand_dims(img1,0)
+
+# img3 = np.squeeze(img2)
+
+# img4 = np.transpose(img1,[2,1,0])
+
+# img5 = img1[:,:,1]
+
+print(img.shape)
+# print(img2.shape)
+# print(img3.shape)
+# print(img4.shape)
+# print(img6.shape)
+# print("1:",img1)
+# print("6",img6)
+
+# cv2.imshow("test",img5)
+# cv2.waitKey(0)

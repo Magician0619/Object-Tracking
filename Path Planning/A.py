@@ -64,7 +64,7 @@ def show_map(map):
 #       [".", "#", "#", ".", ".", ".", "#", ".", ".", "."],
 #       [".", ".", ".", ".", "#", "#", ".", ".", "#", "."]]
 
-img = cv2.imread("Path Planning/hsv_img/46.jpg")
+img = cv2.imread("hsv_img/46.jpg")
 img_final = img 
 map = pic2list(img)
 img_final_list = map 
