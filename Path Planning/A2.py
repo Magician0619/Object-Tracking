@@ -20,8 +20,7 @@ def pic2list(img):
     img_list = a.tolist()#将图片转换成数组列表格式
     text_save("Path Planning/maze3.txt",img_list)
     return img_list
-def cone_dilate(img):
-    dilate = 
+
 # 启发距离, 当前点和目标点的启发距离;就是简单的曼哈顿距离
 def heuristic_distace(Neighbour_node,target_node):
     H = abs(Neighbour_node[0] - target_node[0]) + abs(Neighbour_node[1] - target_node[1])
@@ -65,7 +64,7 @@ def show_map(map):
 #       [".", "#", "#", ".", ".", ".", "#", ".", ".", "."],
 #       [".", ".", ".", ".", "#", "#", ".", ".", "#", "."]]
 
-img = cv2.imread("img/hsv_img/5.jpg")
+img = cv2.imread("img/40.jpg")
 img_final = img 
 
 map = pic2list(img_final)

@@ -64,7 +64,7 @@ def show_map(map):
 #       [".", "#", "#", ".", ".", ".", "#", ".", ".", "."],
 #       [".", ".", ".", ".", "#", "#", ".", ".", "#", "."]]
 
-img = cv2.imread("hsv_img/46.jpg")
+img = cv2.imread("123.jpg")
 img_final = img 
 map = pic2list(img)
 img_final_list = map 
@@ -79,7 +79,7 @@ obstacle = find_coordinate(map,"255")
 # start_node = [240,160]
 # target_node = [0,160]
 start_node = [237,176]
-target_node = [2,74]
+target_node = [2,174]
 current_node = start_node
 
 # 设置路径起点为当前节点
